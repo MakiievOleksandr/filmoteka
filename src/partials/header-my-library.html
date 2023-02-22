@@ -1,0 +1,48 @@
+<header class="header header__library">
+  <div class="container header__container__library">
+    <div class="header__wrap">
+      <a href="index.html" class="header__logo-link">
+        <svg aria-label="logo" class="header__logo-svg">
+          <use
+            class="header__logo-img"
+            href="./images/sprite.svg#icon-film"
+          ></use>
+        </svg>
+        <span class="header__logo-text">Filmoteka</span>
+      </a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a href="index.html" class="nav__link">Home</a>
+          </li>
+          <li class="nav__item">
+            <a href="#" class="nav__link nav__link--current library"
+              >My library</a
+            >
+          </li>
+          <li class="nav__item sign-in">
+            <button id="signin" class="navigation-button nav__link">
+              Sign in
+            </button>
+            <button id="signout" class="navigation-button nav__link signOut">
+              Sign out
+            </button>
+            <div id="googleUser"></div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="checkbox-wrap">
+      <input type="checkbox" class="checkbox" id="checkbox" />
+      <label for="checkbox" class="label">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+        <span class="ball"></span>
+      </label>
+    </div>
+    <div class="header__btn-wrap">
+      <button type="button" class="header__btn" id="watched">Watched</button>
+      <button type="button" class="header__btn" id="queue">Queue</button>
+    </div>
+  </div>
+</header>
