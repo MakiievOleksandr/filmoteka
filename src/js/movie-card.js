@@ -2,9 +2,11 @@ import { FilmsApiService } from './films-service';
 import { getRefs } from './get-refs';
 import { closeVideo, renderVideoBox } from './addvideo';
 import Notiflix from 'notiflix';
+import { Firebase } from './firebase-class';
 
 const refs = getRefs();
 const filmsApiService = new FilmsApiService();
+const firebase = new Firebase();
 
 const backdrop = document.querySelector('.backdrop');
 backdrop.addEventListener('click', backdropClick);
@@ -149,9 +151,11 @@ const headerElTest = document.querySelector('.header');
 
 export async function onMovieCardClick(e) {
   e.preventDefault();
+
   if (
     !e.currentTarget.classList.contains('header__form-list-item') &&
-    !e.currentTarget.classList.contains('film__item')
+    !e.currentTarget.classList.contains('film__item') &&
+    !e.currentTarget.classList.contains('glide__slide')
   ) {
     return;
   }
@@ -180,6 +184,17 @@ export async function onMovieCardClick(e) {
   const movieId = movieCardIdRef.id;
   const videos = await filmsApiService.fetchMovieVideo(movieId);
   renderVideoBox(videos);
+  firebase.getMovieRateLikes('like');
+  firebase.getMovieRateLikes('dislike');
+  firebase.disableVoteBtn('like', 'likeBtn');
+  firebase.disableVoteBtn('dislike', 'dislikeBtn');
+}
+
+function resetLikes() {
+  refs.likeBtn.disabled = false;
+  refs.dislikeBtn.disabled = false;
+  refs.like.textContent = 0;
+  refs.dislike.textContent = 0;
 }
 
 refs.modalCloseBtn.addEventListener('click', onMovieModalClose);
@@ -211,11 +226,13 @@ function onMovieModalClose(e) {
 function onEscPress(e) {
   if (e.code === 'Escape') {
     onMovieModalClose();
+    resetLikes();
   }
 }
 
 function backdropClick(e) {
   if (e.currentTarget === e.target) {
     onMovieModalClose();
+    resetLikes();
   }
 }
